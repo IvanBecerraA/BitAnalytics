@@ -1,0 +1,106 @@
+﻿@model IEnumerable<BitAnalytics.Models.Vehicle>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container text-center py-2">
+    <h1 class="h1"><strong>Vehículos</strong></h1>
+</div>
+
+<div class="container my-4">
+    <p>
+        <a class="btn btn-success" asp-action="Create"><i class="bi bi-plus-circle create-icon"></i> Agregar Vehículo</a>
+    </p>
+</div>
+<div class="container" style="min-height: 500px;">
+    <div class="col-12 table-responsive">
+        <table class="table" id='tabla'>
+            <thead>
+                <tr>
+                    <th>
+                        Patente
+                    </th>
+                    <th>
+                        Marca
+                    </th>
+                    <th>
+                        Modelo
+                    </th>
+                    <th>
+                        Color
+                    </th>
+                    <th>
+                        Año
+                    </th>
+                    <th>
+                        Cilindrada (cc)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Plate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Make)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Model)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Color)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Year)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Displacement)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a> 
+                            <a asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-journal-text detail-icon"></i></a> 
+                            <a asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash-fill delete-icon"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<link href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
+<script>
+    const dataTableOptions = {
+        lengthMenu: [5, 10, 15, 20],
+        pageLength: 5,
+        destroy: true,
+        language: {
+            lengthMenu: "Mostrar _MENU_ registros por página",
+            zeroRecords: "Ningún usuario encontrado",
+            info: "Mostrando de _START_ a _END_ de un total de _TOTAL_ registros",
+            infoEmpty: "Ningún usuario encontrado",
+            infoFiltered: "(filtrados desde _MAX_ registros totales)",
+            search: "Buscar:",
+            loadingRecords: "Cargando...",
+            paginate: {
+                first: "Primero",
+                last: "Último",
+                next: "Siguiente",
+                previous: "Anterior"
+            }
+        }
+    }
+
+    var js = jQuery.noConflict(true);
+    js(document).ready(function () {
+        js('#tabla').DataTable(dataTableOptions);
+    });
+</script>
